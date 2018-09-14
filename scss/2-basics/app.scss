@@ -1,0 +1,43 @@
+html {
+    font-size: $font-md;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    color: $color-text-default;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+:focus {
+    outline: none;
+}
+
+:hover {
+    outline: none;
+}
+a:hover {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+
+ul{
+    list-style: none;
+    -webkit-padding-start: 0;
+}
+li {
+    list-style: none;
+    -webkit-padding-start: 0;
+}
+
+p {
+    color: $color-text-default;
+}
+
+.app .modal .modal-area {
+    background-color: white;
+}
