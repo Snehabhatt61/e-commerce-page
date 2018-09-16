@@ -1,0 +1,1 @@
+export const GET_PRODUCTINFO = "get_prodctinfo";

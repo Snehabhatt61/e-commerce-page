@@ -45,7 +45,6 @@ let allUsers = [
     
 
 ];
-
 export default class DashboardBody extends Component {
     constructor(props) {
         super(props);
