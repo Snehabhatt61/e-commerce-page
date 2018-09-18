@@ -1,1 +1,1 @@
-export const GET_PRODUCTINFO = "get_prodctinfo";
+export const GET_PRODUCTINFO = "GET_PRODUCTINFO";

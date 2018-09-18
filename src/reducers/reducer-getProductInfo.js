@@ -1,13 +1,12 @@
 import { GET_PRODUCTINFO } from '../actions/types';
 
 const INITIAL_STATE = {
-    product_info  : []
+    product_info : []
 }
-
-export default function (INITIAL_STATE = state, action) {
+export default function (state = INITIAL_STATE, action) {
     switch (action.type) {
         case GET_PRODUCTINFO:
-            return {
+            return { 
                 ...state,
                 product_info: action.payload
             };

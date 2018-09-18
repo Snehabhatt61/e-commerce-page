@@ -15,11 +15,17 @@ export default class DashboardHeader extends Component {
                             <p>Sign In</p>
                         </li>
                     </ul>
-                    <ul className='d-flex header-sub'>
+                    <select class="dropdown">
+                        <option class="dropdown-item" href="#">Men</option>
+                        <option class="dropdown-item" href="#">Women</option>
+                        <option class="dropdown-item" href="#">Kids</option>
+                    </select>
+                </div>
+                {/* <ul className='d-flex header-sub'>
                         <li className='header-sub-category'>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Shop by Category
+                                    Shop by Category
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="#">Men</a>
@@ -29,9 +35,8 @@ export default class DashboardHeader extends Component {
                             </div>
                         </li>
                         <li>Amazon Pay</li>
-                    </ul>
-                </div>
-            </React.Fragment>
+                    </ul> */}
+            </React.Fragment >
         );
     }
 }
