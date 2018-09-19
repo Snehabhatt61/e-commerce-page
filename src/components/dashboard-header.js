@@ -37,21 +37,6 @@ export default class DashboardHeader extends Component {
                     />
                     <option></option>
                 </div>
-                {/* <ul className='d-flex header-sub'>
-                        <li className='header-sub-category'>
-                            <div className="dropdown">
-                                <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Shop by Category
-                                </button>
-                                <div className="dropdown-menu">
-                                    <a className="dropdown-item" href="#">Men</a>
-                                    <a className="dropdown-item" href="#">Women</a>
-                                    <a className="dropdown-item" href="#">Kids</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>Amazon Pay</li>
-                    </ul> */}
             </React.Fragment >
         );
     }

@@ -10,7 +10,6 @@ import reducers from './reducers';
 import rootReducer from './reducers';
 
 const logger = createLogger();
-// const createStoreWithMiddleware = applyMiddleware(thunk, promise, logger)(createStore);
 const store = createStore(
   rootReducer,
   applyMiddleware(thunk, promise, logger)

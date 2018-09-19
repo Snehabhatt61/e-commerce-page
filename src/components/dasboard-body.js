@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DashboardSidebar from './dashboard-sidebar';
 import { getProductInfo } from '../actions/getProductInfo';
-// import { userInfo } from 'os';
 
 class DashboardBody extends Component {
     constructor(props) {
@@ -12,7 +11,6 @@ class DashboardBody extends Component {
             temp: [],
             data: []
         };
-        // console.log('women',womenInfo);
     }
     productInfolist = async () => {
         await this.props.getProductInfo();
@@ -59,29 +57,11 @@ class DashboardBody extends Component {
                             );
                         })}
                     </div>
-                    {temp && temp.map((targetAud, index) => {
-                        return (
-                            <div key={index}>{targetAud}</div>
-                        )
-                    })}
                     <div>
                         <button onClick={() => this.targetaudWiseProductInfo()}>
                             Click Me
                         </button>
-                        {/* {temp && temp.map(() => {
-                            return (
-                                <div>
-                                    <button onClick={() => this.targetaudWiseProductInfo()}>
-                                        Click Me
-                                    </button>
-                                    <div>{temp.title}</div>
-                                </div>
-                            )
-                        }
-
-                        )} */}
                         {this.state.data.length > 0 && this.state.data.map((item, index) => {
-                            console.log('item', item);
                             return (
                                 <div key={index}>
                                     <div>{item.title}</div>
@@ -95,7 +75,6 @@ class DashboardBody extends Component {
     }
 }
 function mapStateToProps(state) {
-    // console.log('state', state.product_info.product_info);
     return {
         product_info: state.product_info.product_info
     }

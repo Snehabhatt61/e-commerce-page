@@ -66,15 +66,12 @@ li {
     background-color: aliceblue;
 }
 .abc {
-    /* background-color: aqua; */
     margin:0;
 }
 .user-container {
     display: flex;
     align-content: space-between;
     flex-wrap:wrap;
-    /* background-color : #7f7f7f; */
-    /* justify-items: space-between; */
 }
 .user-card {
 	position: relative;
