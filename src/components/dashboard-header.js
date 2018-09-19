@@ -1,7 +1,23 @@
 import React, { Component } from 'react';
+import { getProductInfo } from "../actions/getProductInfo";
 
 export default class DashboardHeader extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            selectedOption : '',
+            target_options : []
+        }
+    }
+    // handleChange(selectedOption) {
+    //     this.setState({selectedOption});
+    // }
+    // componentDidMount() {
+    //     getProductInfo()
+
+    // }
     render() {
+        // let options = 
         return (
             <React.Fragment>
                 <div className='header'>
@@ -15,22 +31,22 @@ export default class DashboardHeader extends Component {
                             <p>Sign In</p>
                         </li>
                     </ul>
-                    <select class="dropdown">
-                        <option class="dropdown-item" href="#">Men</option>
-                        <option class="dropdown-item" href="#">Women</option>
-                        <option class="dropdown-item" href="#">Kids</option>
-                    </select>
+                    <select className="dropdown"
+                        // options={options}
+                        onChange={this.handleChange}
+                    />
+                    <option></option>
                 </div>
                 {/* <ul className='d-flex header-sub'>
                         <li className='header-sub-category'>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div className="dropdown">
+                                <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Shop by Category
                                 </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Men</a>
-                                    <a class="dropdown-item" href="#">Women</a>
-                                    <a class="dropdown-item" href="#">Kids</a>
+                                <div className="dropdown-menu">
+                                    <a className="dropdown-item" href="#">Men</a>
+                                    <a className="dropdown-item" href="#">Women</a>
+                                    <a className="dropdown-item" href="#">Kids</a>
                                 </div>
                             </div>
                         </li>
