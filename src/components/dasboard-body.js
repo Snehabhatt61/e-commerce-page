@@ -77,6 +77,4 @@ function mapStateToProps(state) {
         product_info: state.product_info.product_info,
     }
 }
-export default connect(mapStateToProps, {
-    getProductInfo 
-})(DashboardBody);
+export default connect(mapStateToProps, {getProductInfo})(DashboardBody);

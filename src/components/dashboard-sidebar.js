@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import getSortedProductInfo from '../actions/getProductInfo';
+import {getSortedProductInfo} from '../actions/getProductInfo';
 import { connect } from 'react-redux';
 
 class DashboardSidebar extends Component {
@@ -10,8 +10,9 @@ class DashboardSidebar extends Component {
         };
     }
     productSortedlist = async () => {
+        await this.props.getSortedProductInfo();
         const brandSorting = await this.props.sorted_product_info;
-        await console.log('sorting',this.props.sorted_product_info);
+        await console.log('sorting',brandSorting);
     }
     handleChange = async (e) => {
         await this.productSortedlist();
@@ -54,8 +55,6 @@ function mapStateToProps(state) {
     console.log('statelog',state);
     return {
         sorted_product_info: state.sorted_product_info.sorted_product_info,
-    }   
+    }
 }
-export default connect(mapStateToProps, {
-    getSortedProductInfo
-})(DashboardSidebar);
+export default connect(mapStateToProps, {getSortedProductInfo})(DashboardSidebar);

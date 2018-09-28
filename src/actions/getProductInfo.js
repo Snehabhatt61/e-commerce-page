@@ -24,11 +24,9 @@ export function getSortedProductInfo() {
     return async function (dispatch) {
         try {
             const response = await axios.put('http://localhost:4000/sort=asc');
-            await console.log('action',response);
-            await dispatch({ type: GET_SORTEDDATA, payload: response.data});
-            await console.log('action',response);
+            await dispatch({ type: GET_SORTEDDATA, payload: response.data});       
         } catch (e) {
             console.error(e);
         }
-    }
+    }  
 };
