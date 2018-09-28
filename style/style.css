@@ -83,3 +83,12 @@ li {
 	width: 200px;
 	box-shadow: 0 2px 4px 0 rgba(156, 156, 156, 0.5);
 }
+.header-dropdown {
+    width: 1000px;
+    border-right: none;
+    border-left:none;
+    border-top: 1px;
+    justify-content: center;
+    background-color:aliceblue;
+
+}

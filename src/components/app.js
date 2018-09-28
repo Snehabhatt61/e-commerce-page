@@ -6,7 +6,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <DashboardHeader/>
+        {/* <DashboardHeader/> */}
         <DashboardBody/>
       </div>
     );

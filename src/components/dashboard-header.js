@@ -1,43 +1,53 @@
 import React, { Component } from 'react';
 import { getProductInfo } from "../actions/getProductInfo";
+import PropTypes from 'prop-types';
+
 
 export default class DashboardHeader extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            selectedOption : '',
-            target_options : []
+            value: ''
         }
     }
-    // handleChange(selectedOption) {
-    //     this.setState({selectedOption});
-    // }
-    // componentDidMount() {
-    //     getProductInfo()
 
-    // }
+    handleChange = async (e) => {
+        this.setState({
+            value: await e.target.value
+        })
+        await this.props.targetAudience(this.state.value);
+    }
+
     render() {
-        // let options = 
         return (
-            <React.Fragment>
-                <div className='header'>
-                    <ul className='d-flex'>
-                        <li className='header-logo'>BDS</li>
-                        <li>
-                            <input placeholder='Search' className='header-search'></input>
-                        </li>
-                        <li className='d-flex push'>
-                            <p>Sign Up</p>
-                            <p>Sign In</p>
-                        </li>
-                    </ul>
+            <div className='header'>
+                <ul className='d-flex'>
+                    <li className='header-logo bold'>E-commerce</li>
+                    <li>
+                        <input placeholder='Search' className='header-search'></input>
+                    </li>
+                    <li className='d-flex push'>
+                        <p>Sign Up</p>
+                        <p>Sign In</p>
+                    </li>
+                </ul>
+                <form onSubmit={this.handleSubmit}>
                     <select className="dropdown"
-                        // options={options}
+                        value={this.state.value}
                         onChange={this.handleChange}
-                    />
-                    <option></option>
-                </div>
-            </React.Fragment >
-        );
+                        className='header-dropdown'
+                    >
+                        <option value='Men'>Men</option>
+                        <option value='Women'>Women</option>
+                        <option value='Kids'>Kids</option>
+                    </select>
+                </form>
+                {/* <button onClick={this.props.greet}>Click</button> */}
+            </div>
+        )
     }
 }
+DashboardHeader.propTypes = {
+    greet: PropTypes.func,
+    targetAudience: PropTypes.func
+};
