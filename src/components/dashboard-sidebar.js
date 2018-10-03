@@ -9,22 +9,20 @@ class DashboardSidebar extends Component {
             value: ''
         };
     }
-    productSortedlist = async () => {
-        await this.props.getSortedProductInfo();
-        const brandSorting = await this.props.sorted_product_info;
-        await console.log('sorting',brandSorting);
-    }
+    // productSortedlist = async () => {
+    //     await this.props.getSortedProductInfo();
+    //     const brandSorting = await this.props.sorted_product_info;
+    //     await console.log('sorting',brandSorting);
+    // }
     handleChange = async (e) => {
         await this.productSortedlist();
         // this.setState({
         //     value: e.target.value
         // })
     }
-    // componentDidMount = async () => {
-    //     console.log('sorted',sorted_product_info);
-    // }
     render() {
-        return (
+        const sort_list_desc = this.props.sorted_product_info
+        return (    
             <React.Fragment>
                 <div className='sidebar'>
                     <p>Show results for</p>
@@ -32,7 +30,7 @@ class DashboardSidebar extends Component {
                     <input type="checkbox" />Brands
                     <hr />
                     <p>Price</p>
-                    <input type="checkbox" />1000 - 2000
+                    <input type="checkbox" /> Less than 1000
 
                      {/* <form onSubmit={this.handleSubmit}>
                         <select className="dropdown"
@@ -45,7 +43,23 @@ class DashboardSidebar extends Component {
                             <option value='Kids'>High to low</option>
                         </select>
                     </form> */}
-                    <button onClick={() => this.productSortedlist()}>Click</button>
+                    {/* <div className="user-container">
+                            {sort_list_desc && sort_list_desc.map((product, index) => {
+                                return (
+                                    <div className="user-card" key={index}>
+                                        <img
+                                            className="user-img"
+                                            src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg"
+                                        />
+                                        <p className="user-name">{product.title}</p>
+                                        <p className="user-designation">{product.quantity}</p>
+                                        <p className="user-team">Rs.{product.pricing}</p>
+                                    </div>
+                                );
+                            })}
+                        </div> */}
+                    {/* <button onClick={() => this.productSortedlist()}>Click</button> */}
+
                 </div>
             </React.Fragment>
         );
