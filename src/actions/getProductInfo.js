@@ -4,14 +4,16 @@ import {
     GET_SORTEDDATA
 } from "./types";
 
-export function getProductInfo(audience) {
+export function getProductInfo(filterSort) {
     return async function (dispatch) {
         try {
             const response = await axios.get('http://localhost:4000/product-info', {
                 params: {
-                    target_audience: audience
+                    // target_audience: audience,
+                    filter : filterSort
                 }
             });
+
             await dispatch({ type: GET_PRODUCTINFO, payload: response.data });
             // await console.log('action',response);
         } catch (e) {

@@ -9,6 +9,7 @@ class DashboardBody extends Component {
         super(props);
         this.state = {
             data: [],
+            // temp: []
         };
     }
     productSortedlist = async () => {
@@ -19,34 +20,45 @@ class DashboardBody extends Component {
     productInfolist = async () => {
         await this.props.getProductInfo();
     }
-    targetaudWiseProductInfo = async (audience) => {
-        const product_list = await this.props.getProductInfo(audience);
-        console.log('hello', this.props.getProductInfo(audience));
-        const temp = await product_list && product_list.filter((product) => {
-            return product.target_audience === "Women"
-        });
+    brandWiseSorting = (filterSort) => {
+        console.log("I am working");
+    }
+    targetaudWiseProductInfo = async () => {
+        const product_list = await this.props.product_info;
+        console.log('hello', product_list);
+        // const temp = await product_list && product_list.filter((product) => {
+        //     return product.target_audience === "women"
+        // });
+        // const tempMen = await product_list && product_list.filter((product) => {
+        //     return product.target_audience === "men"
+        // });
+        // const tempKids = await product_list && product_list.filter((product) => {
+        //     return product.target_audience === "kids"
+        // });
+        console.log('women', tempMen);
         this.setState({
-            data: temp
+            data: temp,
+            data: tempMen,
+            data: tempKids
         })
     }
     componentDidMount = async () => {
         await this.productInfolist();
     }
-    // onGreet = () => {
-    //     alert('From child to parent');
-    // }
     render() {
         const product_list = (this.props.product_info);
         const sort_list_desc = this.props.sorted_product_info;
         return (
             <div>
-                <DashboardHeader targetAudience={(audience) => this.targetaudWiseProductInfo(audience)} />
+                <DashboardHeader
+                    targetAudience={(audience) => this.targetaudWiseProductInfo(audience)}
+                />
                 <div>
                     <button className='sortButton' onClick={() => this.productSortedlist()}>Sort</button>
                 </div>
                 <div className='row abc'>
                     <div className='col-3'>
-                        <DashboardSidebar />
+                        <DashboardSidebar brandSorting = {(filterSort) => this.brandWiseSorting(filterSort)} />
                     </div>
                     <div className='col-9'>
                         <div className="user-container">
@@ -68,10 +80,11 @@ class DashboardBody extends Component {
                             {/* <button onClick={() => this.targetaudWiseProductInfo()}>
                                 Click Me
                         </button> */}
-                            {this.state.data && this.state.data.map((item, index) => {
+                            {this.state.data.length > 0 && this.state.data.map((item, index) => {
+                                console.log('item', item);
                                 return (
                                     <div>
-                                        <div key={index}>{item.title}</div>
+                                        <div key={index}>hey{item.title}</div>
                                     </div>
                                 )
                             })}

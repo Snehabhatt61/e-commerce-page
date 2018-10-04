@@ -33,7 +33,6 @@ export default class DashboardHeader extends Component {
                     </div>
                     <form onSubmit={this.handleSubmit}>
                         <select className="dropdown"
-                            value=''
                             onChange={this.handleChange}
                             className='header-dropdown'
                         >Category

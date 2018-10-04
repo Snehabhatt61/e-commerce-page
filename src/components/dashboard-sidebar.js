@@ -1,33 +1,49 @@
 import React, { Component } from 'react';
-import {getSortedProductInfo} from '../actions/getProductInfo';
+import { getSortedProductInfo } from '../actions/getProductInfo';
 import { connect } from 'react-redux';
 
 class DashboardSidebar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: ''
+            value: 'All'
         };
     }
-    // productSortedlist = async () => {
-    //     await this.props.getSortedProductInfo();
-    //     const brandSorting = await this.props.sorted_product_info;
-    //     await console.log('sorting',brandSorting);
-    // }
     handleChange = async (e) => {
-        await this.productSortedlist();
-        // this.setState({
-        //     value: e.target.value
-        // })
+        this.setState({
+            value: await e.target.value
+        })
+        await this.props.brandSorting(this.state.value)
+        console.log('branding', this.state.value);
     }
     render() {
         const sort_list_desc = this.props.sorted_product_info
-        return (    
+        return (
             <React.Fragment>
                 <div className='sidebar'>
                     <p>Show results for</p>
-                    <p>Refine By</p>
-                    <input type="checkbox" />Brands
+                    <p>Refine By :</p>
+                    <p>Brands</p>
+                    <input 
+                        type="checkbox"
+                        value="Vero Moda"
+                        onChange={this.handleChange}
+                    />
+                    Vero Moda
+                    <br />
+                    <input
+                        type="checkbox"
+                        value="Reliance Trends"
+                        onChange={this.handleChange}
+                    />
+                    Reliance Trends
+                     <br />
+                    <input 
+                        type="checkbox"
+                        value="Pepe"
+                        onChange={this.handleChange}
+                    />
+                    Pepe
                     <hr />
                     <p>Price</p>
                     <input type="checkbox" /> Less than 1000
@@ -66,9 +82,9 @@ class DashboardSidebar extends Component {
     }
 }
 function mapStateToProps(state) {
-    console.log('statelog',state);
+    console.log('statelog', state);
     return {
         sorted_product_info: state.sorted_product_info.sorted_product_info,
     }
 }
-export default connect(mapStateToProps, {getSortedProductInfo})(DashboardSidebar);
+export default connect(mapStateToProps, { getSortedProductInfo })(DashboardSidebar);
