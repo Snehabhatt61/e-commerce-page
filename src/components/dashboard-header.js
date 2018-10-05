@@ -7,7 +7,8 @@ export default class DashboardHeader extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: 'all'
+            value: 'all',
+            search: ''
         }
     }
     handleChange = async (e) => {
@@ -15,6 +16,12 @@ export default class DashboardHeader extends Component {
             value: await e.target.value
         })
         await this.props.targetAudience(this.state.value);
+    }
+    searchHandler = async (e) => {
+        this.setState({
+            search: await e.target.value
+        })
+        console.log('search', this.state.search);
     }
     render() {
         return (
@@ -24,8 +31,14 @@ export default class DashboardHeader extends Component {
                 <div className='header'>
                     <div className='d-flex'>
                         <div className='header-logo bold'>JustBuy</div>
-                        <input placeholder='Search' className='header-search'></input>
-                        <button className='header-search-button'>Search</button>
+                        <input
+                            placeholder='Search'
+                            className='header-search'
+                            onChange={this.searchHandler}
+                        ></input>
+                        <button className='header-search-button'>
+                            Search
+                        </button>
                         <div className='d-flex push'>
                             <p>Sign Up</p>
                             <p>Sign In</p>

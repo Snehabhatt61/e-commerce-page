@@ -33,10 +33,10 @@ class DashboardSidebar extends Component {
                     <br />
                     <input
                         type="checkbox"
-                        value="Reliance Trends"
+                        value="Adidas"
                         onChange={this.handleChange}
                     />
-                    Reliance Trends
+                    Adidas
                      <br />
                     <input 
                         type="checkbox"
@@ -44,6 +44,20 @@ class DashboardSidebar extends Component {
                         onChange={this.handleChange}
                     />
                     Pepe
+                    <br />
+                    <input 
+                        type="checkbox"
+                        value="Biba"
+                        onChange={this.handleChange}
+                    />
+                    Biba
+                    <br />
+                    <input 
+                        type="checkbox"
+                        value="First Cry"
+                        onChange={this.handleChange}
+                    />
+                    First Cry
                     <hr />
                     <p>Price</p>
                     <input type="checkbox" /> Less than 1000
