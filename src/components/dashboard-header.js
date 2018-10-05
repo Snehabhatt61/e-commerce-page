@@ -22,7 +22,9 @@ export default class DashboardHeader extends Component {
             search: await e.target.value
         })
         console.log('search', this.state.search);
+        await this.props.searchAll();
     }
+
     render() {
         return (
             <React.Fragment>
@@ -35,7 +37,8 @@ export default class DashboardHeader extends Component {
                             placeholder='Search'
                             className='header-search'
                             onChange={this.searchHandler}
-                        ></input>
+                        >
+                        </input>
                         <button className='header-search-button'>
                             Search
                         </button>

@@ -5,7 +5,6 @@ import {
 } from "./types";
 
 export function getProductInfo(audience , filterItems) {
-    console.log('action',audience)
     return async function (dispatch) {
         try {
             const response = await axios.get('http://localhost:4000/product-info', {

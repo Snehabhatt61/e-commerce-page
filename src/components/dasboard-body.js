@@ -10,7 +10,8 @@ class DashboardBody extends Component {
         this.state = {
             data: [],
             filterBrand: [],
-            filterAudience: []
+            filterAudience: [],
+            searchedList: []
         };
     }
     productSortedlist = async () => {
@@ -36,13 +37,20 @@ class DashboardBody extends Component {
         this.state.filterAudience.push(sortAudience);
         return this.props.getProductInfo(this.state.filterAudience);
     }
+    searchBar = async searchedItem => {
+        console.log('abc',searchedItem);
+        this.state.searchedList.push(searchedItem);
+        console.log('abc',this.state.searchedList);
+        return this.props.getProductInfo(this.state.searchedList);
+    }
     render() {
         const product_list = (this.props.product_info);
         const sort_list_desc = this.props.sorted_product_info;
         return (
             <div>
                 <DashboardHeader
-                    targetAudience={(audience) => this.targetaudWiseProductInfo(audience)}
+                    // targetAudience={(audience) => this.targetaudWiseProductInfo(audience)}
+                    searchAll={() => this.searchBar()}
                 />
                 <div>
                     <button className='sortButton' onClick={() => this.productSortedlist()}>Sort</button>
