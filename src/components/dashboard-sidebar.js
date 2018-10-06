@@ -11,10 +11,10 @@ class DashboardSidebar extends Component {
     }
     handleChange = async (e) => {
         this.setState({
-            value: await e.target.value
+            value: await e.target.value.toLowerCase()
         })
         await this.props.brandSorting(this.state.value)
-        console.log('branding', this.state.value);
+        // console.log('branding', this.state.value);
     }
     render() {
         const sort_list_desc = this.props.sorted_product_info

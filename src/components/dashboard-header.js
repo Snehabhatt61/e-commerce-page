@@ -11,12 +11,6 @@ export default class DashboardHeader extends Component {
             search: ''
         }
     }
-    handleChange = async (e) => {
-        this.setState({
-            value: await e.target.value
-        })
-        await this.props.targetAudience(this.state.value);
-    }
     searchHandler = async (e) => {
         this.setState({
             search: await e.target.value
@@ -24,7 +18,6 @@ export default class DashboardHeader extends Component {
         console.log('search', this.state.search);
         await this.props.searchAll();
     }
-
     render() {
         return (
             <React.Fragment>
@@ -36,7 +29,8 @@ export default class DashboardHeader extends Component {
                         <input
                             placeholder='Search'
                             className='header-search'
-                            onChange={this.searchHandler}
+                            onChange={this.props.handleChangeAud}
+                            
                         >
                         </input>
                         <button className='header-search-button'>

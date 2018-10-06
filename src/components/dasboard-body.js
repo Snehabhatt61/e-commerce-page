@@ -3,39 +3,48 @@ import { connect } from 'react-redux';
 import DashboardSidebar from './dashboard-sidebar';
 import DashboardHeader from './dashboard-header';
 import { getProductInfo } from '../actions/getProductInfo';
-import { getSortedProductInfo } from '../actions/getProductInfo';
+import { getSortedProductInfo , getProductInfoTarget} from '../actions/getProductInfo';
 class DashboardBody extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [],
-            filterBrand: [],
-            filterAudience: [],
+            value: 'all',
+            filterBrand: '',
+            filterAudience: '',
             searchedList: []
         };
     }
-    productSortedlist = async () => {
-        await this.props.getSortedProductInfo();
-        const brandSorting = await this.props.sorted_product_info;
-        await console.log('sorting', brandSorting);
-    }
+    // productSortedlist = async () => {
+    //     await this.props.getSortedProductInfo();
+    //     const brandSorting = await this.props.product_info;
+    //     await console.log('sorting', brandSorting);
+    // }
     productInfolist = async () => {
         await this.props.getProductInfo();
     }
     brandWiseSorting = async sortingItem => {
         console.log('sortingItem',sortingItem);
-        this.state.filterBrand.push(sortingItem);
-        return this.props.getProductInfo(this.state.filterBrand);
+        await this.setState({
+            filterBrand : sortingItem
+        })
+        console.log('brand',this.state.filterBrand);
+        await this.props.getProductInfoTarget(this.state.filterBrand);
     }
     targetaudWiseProductInfo = async sortAudience => {
-        // const product_list = await this.props.product_info;
-        // console.log('hello', product_list);
-        // const temp = await product_list && product_list.filter((product) => {
-        //     return product.target_audience === "women"
-        // });
         console.log('sortingaud',sortAudience);
-        this.state.filterAudience.push(sortAudience);
-        return this.props.getProductInfo(this.state.filterAudience);
+        await this.setState({
+            filterAudience : sortAudience
+        })
+        // console.log(this.state.filterAudience);
+        await this.props.getProductInfoTarget(this.state.filterAudience);
+    }
+    handleChangeAud = async (e) => {
+        this.setState({
+            value: await e.target.value.toLowerCase()
+        })
+        console.log('dfg',this.state.value);
+        // await this.props.targetAudience(this.state.value);
     }
     searchBar = async searchedItem => {
         console.log('abc',searchedItem);
@@ -44,21 +53,22 @@ class DashboardBody extends Component {
         return this.props.getProductInfo(this.state.searchedList);
     }
     render() {
-        const product_list = (this.props.product_info);
+        const product_list = this.props.product_info;
+        console.log('list',product_list);
         const sort_list_desc = this.props.sorted_product_info;
         return (
             <div>
                 <DashboardHeader
                     // targetAudience={(audience) => this.targetaudWiseProductInfo(audience)}
                     searchAll={() => this.searchBar()}
+                    handleChangeAud = {(e) => this.handleChangeAud(e)}
                 />
                 <div>
                     <button className='sortButton' onClick={() => this.productSortedlist()}>Sort</button>
                 </div>
                 <div className='row abc'>
                     <div className='col-3'>
-                        <DashboardSidebar 
-                            brandSorting={(filterSort) => this.brandWiseSorting(filterSort)} />
+                        <DashboardSidebar brandSorting={(brand) => this.brandWiseSorting(brand)} />
                     </div>
                     <div className='col-9'>
                         <div className="user-container">
@@ -111,6 +121,7 @@ function mapStateToProps(state) {
     return {
         product_info: state.product_info.product_info,
         sorted_product_info: state.sorted_product_info.sorted_product_info,
+
     }
 }
-export default connect(mapStateToProps, { getProductInfo, getSortedProductInfo })(DashboardBody);
+export default connect(mapStateToProps, { getProductInfo, getSortedProductInfo, getProductInfoTarget })(DashboardBody);
