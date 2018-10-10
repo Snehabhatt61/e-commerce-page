@@ -32,8 +32,9 @@ export default class DashboardHeader extends Component {
                             
                         >
                         </input>
-                        <button className='header-search-button'>
-                            Search
+                        <button className='header-search-button'
+                            onClick = {this.searchHandler}
+                            >
                         </button>
                         <div className='d-flex push'>
                             <p>Sign Up</p>

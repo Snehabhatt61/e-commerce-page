@@ -14,7 +14,6 @@ export function getSearchedProductInfo(search) {
                 }
             });
             await dispatch({ type: SEARCH_INFO, payload: response.data });
-            console.log('hjj',response.data);
         } catch (e) {
             console.error(e);
         }

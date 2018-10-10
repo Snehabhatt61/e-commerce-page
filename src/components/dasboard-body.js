@@ -38,15 +38,19 @@ class DashboardBody extends Component {
         await this.props.getProductInfoTarget(this.state.filterAudience,this.state.filterBrand);
     }
     searchBar = async searchedItem => {
+        // await this.props.getSearchedProductInfo(searchedItem);
         console.log('searchBar',searchedItem);
         const searching = await this.props.search_result;
-        console.log(searching);
+        console.log('searchbar',searching);
         await this.props.getSearchedProductInfo(searchedItem);
+    }
+    searchButtonClicked = async () => {
+        await this.props.getSearchedProductInfo();
     }
     render() {
         const product_list = this.props.product_info;
         const search_list = this.props.search_result;
-        console.log('lkjhgfd',search_list);
+        console.log('search_list',search_list);
         const sort_list_desc = this.props.sorted_product_info;
         return (
             <div>
@@ -54,6 +58,7 @@ class DashboardBody extends Component {
                     // targetAudience={(audience) => this.targetaudWiseProductInfo(audience)}
                     searchAll={(item) => this.searchBar(item)}
                     handleChangeAud = {(e) => this.handleChangeAud(e)}
+                    searchButtonClicked = {this.searchButtonClicked()}
                 />
                 <div>
                     <button className='sortButton' onClick={() => this.productSortedlist()}>Sort</button>
@@ -108,7 +113,7 @@ class DashboardBody extends Component {
                             })}
                         </div>
                         <div className="user-container">
-                            { search_list && search_list.map((searchProduct, index) => {
+                            { search_list.length > 0 && search_list.map((searchProduct, index) => {
                                 return (
                                     <div className="user-card" key={index}>
                                         <img
@@ -129,7 +134,7 @@ class DashboardBody extends Component {
     }
 }
 function mapStateToProps(state) {
-    console.log('searchlis', state.search_result);
+    console.log('searchlis', state.search_result.search_result);
     return {
         product_info: state.product_info.product_info,
         sorted_product_info: state.sorted_product_info.sorted_product_info,

@@ -16,7 +16,6 @@ export default function (state = INITIAL_STATE, action) {
                 ...state,
                 search_result: action.payload
             }
-
         default:
             return state;
     }
