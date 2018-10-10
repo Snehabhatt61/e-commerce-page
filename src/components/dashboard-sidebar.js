@@ -9,13 +9,7 @@ class DashboardSidebar extends Component {
             value: 'All'
         };
     }
-    handleChange = async (e) => {
-        this.setState({
-            value: await e.target.value.toLowerCase()
-        })
-        await this.props.brandSorting(this.state.value)
-        // console.log('branding', this.state.value);
-    }
+    
     render() {
         const sort_list_desc = this.props.sorted_product_info
         return (
@@ -27,35 +21,35 @@ class DashboardSidebar extends Component {
                     <input 
                         type="checkbox"
                         value="Vero Moda"
-                        onChange={this.handleChange}
+                        onChange={this.props.handleChangeBrand}
                     />
                     Vero Moda
                     <br />
                     <input
                         type="checkbox"
                         value="Adidas"
-                        onChange={this.handleChange}
+                        onChange={this.props.handleChangeBrand}
                     />
                     Adidas
                      <br />
                     <input 
                         type="checkbox"
                         value="Pepe"
-                        onChange={this.handleChange}
+                        onChange={this.props.handleChangeBrand}
                     />
                     Pepe
                     <br />
                     <input 
                         type="checkbox"
                         value="Biba"
-                        onChange={this.handleChange}
+                        onChange={this.props.handleChangeBrand}
                     />
                     Biba
                     <br />
                     <input 
                         type="checkbox"
                         value="First Cry"
-                        onChange={this.handleChange}
+                        onChange={this.props.handleChangeBrand}
                     />
                     First Cry
                     <hr />

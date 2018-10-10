@@ -7,7 +7,6 @@ export default class DashboardHeader extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: 'all',
             search: ''
         }
     }
@@ -16,7 +15,7 @@ export default class DashboardHeader extends Component {
             search: await e.target.value
         })
         console.log('search', this.state.search);
-        await this.props.searchAll();
+        await this.props.searchAll(this.state.search);
     }
     render() {
         return (
@@ -29,7 +28,7 @@ export default class DashboardHeader extends Component {
                         <input
                             placeholder='Search'
                             className='header-search'
-                            onChange={this.props.handleChangeAud}
+                            onChange={this.searchHandler}
                             
                         >
                         </input>
@@ -43,7 +42,7 @@ export default class DashboardHeader extends Component {
                     </div>
                     <form onSubmit={this.handleSubmit}>
                         <select className="dropdown"
-                            onChange={this.handleChange}
+                            onChange={this.props.handleChangeAud}
                             className='header-dropdown'
                         >Category
                             <option value="" selected disabled hidden >Category</option>

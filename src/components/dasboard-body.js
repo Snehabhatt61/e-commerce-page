@@ -3,64 +3,56 @@ import { connect } from 'react-redux';
 import DashboardSidebar from './dashboard-sidebar';
 import DashboardHeader from './dashboard-header';
 import { getProductInfo } from '../actions/getProductInfo';
-import { getSortedProductInfo , getProductInfoTarget} from '../actions/getProductInfo';
+import { getSortedProductInfo , getProductInfoTarget, getSearchedProductInfo} from '../actions/getProductInfo';
 class DashboardBody extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [],
-            value: 'all',
-            filterBrand: '',
+            filterBrand: [],
             filterAudience: '',
-            searchedList: []
+            searchedList:[]
         };
     }
-    // productSortedlist = async () => {
-    //     await this.props.getSortedProductInfo();
-    //     const brandSorting = await this.props.product_info;
-    //     await console.log('sorting', brandSorting);
-    // }
+    productSortedlist = async () => {
+        await this.props.getSortedProductInfo();
+        const brandSorting = await this.props.product_info;
+        await console.log('sorting', brandSorting);
+    }
     productInfolist = async () => {
         await this.props.getProductInfo();
     }
-    brandWiseSorting = async sortingItem => {
-        console.log('sortingItem',sortingItem);
-        await this.setState({
-            filterBrand : sortingItem
-        })
-        console.log('brand',this.state.filterBrand);
-        await this.props.getProductInfoTarget(this.state.filterBrand);
-    }
-    targetaudWiseProductInfo = async sortAudience => {
-        console.log('sortingaud',sortAudience);
-        await this.setState({
-            filterAudience : sortAudience
-        })
-        // console.log(this.state.filterAudience);
-        await this.props.getProductInfoTarget(this.state.filterAudience);
-    }
     handleChangeAud = async (e) => {
         this.setState({
-            value: await e.target.value.toLowerCase()
+            filterAudience: await e.target.value.toLowerCase()
         })
-        console.log('dfg',this.state.value);
-        // await this.props.targetAudience(this.state.value);
+        this.handleFilter();
+    }
+    handleChangeBrand = async (e)  => {
+        this.setState({
+            filterBrand: await e.target.value.toLowerCase()
+        })
+        this.handleFilter();
+    }
+    handleFilter = async () => {
+        await this.props.getProductInfoTarget(this.state.filterAudience,this.state.filterBrand);
     }
     searchBar = async searchedItem => {
-        console.log('abc',searchedItem);
-        this.state.searchedList.push(searchedItem);
-        console.log('abc',this.state.searchedList);
-        return this.props.getProductInfo(this.state.searchedList);
+        console.log('searchBar',searchedItem);
+        const searching = await this.props.search_result;
+        console.log(searching);
+        await this.props.getSearchedProductInfo(searchedItem);
     }
     render() {
         const product_list = this.props.product_info;
-        console.log('list',product_list);
+        const search_list = this.props.search_result;
+        console.log('lkjhgfd',search_list);
         const sort_list_desc = this.props.sorted_product_info;
         return (
             <div>
-                <DashboardHeader
+                <DashboardHeader    
                     // targetAudience={(audience) => this.targetaudWiseProductInfo(audience)}
-                    searchAll={() => this.searchBar()}
+                    searchAll={(item) => this.searchBar(item)}
                     handleChangeAud = {(e) => this.handleChangeAud(e)}
                 />
                 <div>
@@ -68,7 +60,11 @@ class DashboardBody extends Component {
                 </div>
                 <div className='row abc'>
                     <div className='col-3'>
-                        <DashboardSidebar brandSorting={(brand) => this.brandWiseSorting(brand)} />
+                        <DashboardSidebar 
+                        brandSorting={(brand) => this.brandWiseSorting(brand)}
+                        handleChangeBrand = {(e) => this.handleChangeBrand(e)}
+                        
+                        />
                     </div>
                     <div className='col-9'>
                         <div className="user-container">
@@ -111,6 +107,21 @@ class DashboardBody extends Component {
                                 );
                             })}
                         </div>
+                        <div className="user-container">
+                            { search_list && search_list.map((searchProduct, index) => {
+                                return (
+                                    <div className="user-card" key={index}>
+                                        <img
+                                            className="user-img"
+                                            src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg"
+                                        />
+                                        <p className="user-name">{searchProduct.title}</p>
+                                        <p className="user-designation">{searchProduct.quantity}</p>
+                                        <p className="user-team">Rs.{searchProduct.pricing}</p>
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -118,10 +129,11 @@ class DashboardBody extends Component {
     }
 }
 function mapStateToProps(state) {
+    console.log('searchlis', state.search_result);
     return {
         product_info: state.product_info.product_info,
         sorted_product_info: state.sorted_product_info.sorted_product_info,
-
+        search_result: state.search_result.search_result
     }
 }
-export default connect(mapStateToProps, { getProductInfo, getSortedProductInfo, getProductInfoTarget })(DashboardBody);
+export default connect(mapStateToProps, { getSearchedProductInfo, getSortedProductInfo, getProductInfoTarget })(DashboardBody);

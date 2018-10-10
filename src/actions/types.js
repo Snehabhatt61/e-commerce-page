@@ -1,2 +1,3 @@
 export const GET_PRODUCTINFO = "GET_PRODUCTINFO";
 export const GET_SORTEDDATA = "GET_SORTEDDATA";
+export const SEARCH_INFO = "SEARCH_INFO";
