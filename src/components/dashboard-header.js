@@ -51,7 +51,6 @@ export default class DashboardHeader extends Component {
                             <option value='Kids'>Kids</option>
                         </select>
                     </form>
-                    {/* <button onClick={this.props.greet}>Click</button> */}
                 </div>
             </React.Fragment>
         )

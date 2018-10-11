@@ -30,6 +30,25 @@ export function getProductInfoTarget(audience, brand, success) {
                     // high_to_low: sort 
                 }
             });
+            console.log('res', response)
+            await dispatch({ type: GET_PRODUCTINFO, payload: response.data });
+            success && success();
+        } catch (e) {
+            console.error(e);
+        }
+    }
+};
+export function getProductInfo(all, filter, sort) {
+    return async function (dispatch) {
+        try {
+            const response = await axios.get('http://localhost:4000/productInfo', {
+                params: {
+                    all_data: all,
+                    filter_data: filter,
+                    sort_data: sort
+                }
+            });
+            console.log('res', response)
             await dispatch({ type: GET_PRODUCTINFO, payload: response.data });
             success && success();
         } catch (e) {

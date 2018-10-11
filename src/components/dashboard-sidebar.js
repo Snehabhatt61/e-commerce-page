@@ -20,69 +20,40 @@ class DashboardSidebar extends Component {
                     <input
                         type="checkbox"
                         value="Vero Moda"
-                        onChange={this.props.handleChangeBrand}
+                        onChange={e => this.props.handleChangeBrand(e.target.value.toLowerCase())}
                     />
                     Vero Moda
                     <br />
                     <input
                         type="checkbox"
                         value="Adidas"
-                        onChange={this.props.handleChangeBrand}
+                        onChange={e => this.props.handleChangeBrand(e.target.value.toLowerCase())}
                     />
                     Adidas
                      <br />
                     <input
                         type="checkbox"
                         value="Pepe"
-                        onChange={this.props.handleChangeBrand}
+                        onChange={e => this.props.handleChangeBrand(e.target.value.toLowerCase())}
                     />
                     Pepe
                     <br />
                     <input
                         type="checkbox"
                         value="Biba"
-                        onChange={this.props.handleChangeBrand}
+                        onChange={e => this.props.handleChangeBrand(e.target.value.toLowerCase())}
                     />
                     Biba
                     <br />
                     <input
                         type="checkbox"
                         value="First Cry"
-                        onChange={this.props.handleChangeBrand}
+                        onChange={e => this.props.handleChangeBrand(e.target.value.toLowerCase())}
                     />
                     First Cry
                     <hr />
-                    <p>Price</p>
-                    <input type="checkbox" /> Less than 1000
-
-                     {/* <form onSubmit={this.handleSubmit}>
-                        <select className="dropdown"
-                            value={this.state.value}
-                            onChange={this.handleChange}
-                            className='header-sortby'
-                        >
-                            <option value=''>Relevance</option>
-                            <option value='Women'>Low to high</option>
-                            <option value='Kids'>High to low</option>
-                        </select>
-                    </form> */}
-                    {/* <div className="user-container">
-                            {sort_list_desc && sort_list_desc.map((product, index) => {
-                                return (
-                                    <div className="user-card" key={index}>
-                                        <img
-                                            className="user-img"
-                                            src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg"
-                                        />
-                                        <p className="user-name">{product.title}</p>
-                                        <p className="user-designation">{product.quantity}</p>
-                                        <p className="user-team">Rs.{product.pricing}</p>
-                                    </div>
-                                );
-                            })}
-                        </div> */}
-                    {/* <button onClick={() => this.productSortedlist()}>Click</button> */}
-
+                    {/* <p>Price</p>
+                    <input type="checkbox" /> Less than 1000 */}
                 </div>
             </React.Fragment>
         );

@@ -31,17 +31,18 @@ class DashboardBody extends Component {
             filterAudience: await e.target.value.toLowerCase()
         })
         this.handleFilter();
-        console.log('aud', this.state.filterAudience);
     }
-
-    handleChangeBrand = async (e) => {
+    handleChangeBrand = async (value) => {
         this.setState({
-            filterBrand: await e.target.value.toLowerCase()
+            filterBrand: value
         })
         this.handleFilter();
+        console.log('aud', this.state.filterBrand);
     }
     handleFilter = async () => {
+        console.log('props product_info', this.props.product_info)
         await this.props.getProductInfoTarget(this.state.filterAudience, this.state.filterBrand, () => this.setState({ data: this.props.product_info }));
+        console.log('filter', this.state.data);
     }
     searchBar = async searchedItem => {
         console.log('searchBar', searchedItem);
@@ -52,11 +53,18 @@ class DashboardBody extends Component {
     searchButtonClicked = async () => {
         await this.props.getSearchedProductInfo();
     }
+    componentDidUpdate = (previousProps, nextState) => {
+        console.log('prevprops', previousProps, nextState);
+        if (previousProps.product_info.filterBrand !== this.props.product_info.filterBrand) {
+            this.setState({ data: this.props.product_info });
+        }
+        else {
+            return false;
+        }
+    }
     render() {
-        // const product_list = this.props.product_info;
-        // const search_list = this.props.search_result;
         const sort_list_desc = this.props.sorted_product_info;
-        console.log('data', this.state.data)
+        // console.log('data', this.state.data)
         return (
             <div>
                 <DashboardHeader
@@ -81,7 +89,7 @@ class DashboardBody extends Component {
                 <div className='row abc'>
                     <div className='col-3'>
                         <DashboardSidebar
-                            brandSorting={(brand) => this.brandWiseSorting(brand)}
+                            // brandSorting={(brand) => this.brandWiseSorting(brand)}
                             handleChangeBrand={(e) => this.handleChangeBrand(e)}
                         />
                     </div>
@@ -94,9 +102,9 @@ class DashboardBody extends Component {
                                             className="user-img"
                                             src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg"
                                         />
-                                        <p className="user-name uppercase">{product.title}</p>
-                                        <p className="user-designation">Quantity - {product.quantity}</p>
-                                        <p className="user-team">Rs.{product.pricing}</p>
+                                        <p className="user-name text-capitalize">{product.title}</p>
+                                        <p className="user-designation text-capitalize">Quantity - {product.quantity}</p>
+                                        <p className="user-team text-capitalize">Rs.{product.pricing}</p>
                                     </div>
                                 );
                             })}
