@@ -5,31 +5,33 @@ import {
     GET_SORTEDDATA
 } from "./types";
 
-export function getSearchedProductInfo(search) {
+export function getSearchedProductInfo(search, success) {
     return async function (dispatch) {
         try {
             const response = await axios.get('http://localhost:4000/search', {
-                params: { 
+                params: {
                     search_bar: search
                 }
             });
             await dispatch({ type: SEARCH_INFO, payload: response.data });
+            success && success();
         } catch (e) {
             console.error(e);
         }
     }
 };
-export function getProductInfoTarget(audience,brand) {
+export function getProductInfoTarget(audience, brand, success) {
     return async function (dispatch) {
         try {
             const response = await axios.get('http://localhost:4000/productInfo', {
                 params: {
                     target_audience: audience,
                     filter_brand: brand,
-                    // search_bar: search
+                    // high_to_low: sort 
                 }
             });
             await dispatch({ type: GET_PRODUCTINFO, payload: response.data });
+            success && success();
         } catch (e) {
             console.error(e);
         }

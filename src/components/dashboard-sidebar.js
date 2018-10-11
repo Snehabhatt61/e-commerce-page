@@ -9,7 +9,6 @@ class DashboardSidebar extends Component {
             value: 'All'
         };
     }
-    
     render() {
         const sort_list_desc = this.props.sorted_product_info
         return (
@@ -18,7 +17,7 @@ class DashboardSidebar extends Component {
                     <p>Show results for</p>
                     <p>Refine By :</p>
                     <p>Brands</p>
-                    <input 
+                    <input
                         type="checkbox"
                         value="Vero Moda"
                         onChange={this.props.handleChangeBrand}
@@ -32,21 +31,21 @@ class DashboardSidebar extends Component {
                     />
                     Adidas
                      <br />
-                    <input 
+                    <input
                         type="checkbox"
                         value="Pepe"
                         onChange={this.props.handleChangeBrand}
                     />
                     Pepe
                     <br />
-                    <input 
+                    <input
                         type="checkbox"
                         value="Biba"
                         onChange={this.props.handleChangeBrand}
                     />
                     Biba
                     <br />
-                    <input 
+                    <input
                         type="checkbox"
                         value="First Cry"
                         onChange={this.props.handleChangeBrand}

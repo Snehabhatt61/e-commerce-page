@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import DashboardSidebar from './dashboard-sidebar';
 import DashboardHeader from './dashboard-header';
 import { getProductInfo } from '../actions/getProductInfo';
-import { getSortedProductInfo , getProductInfoTarget, getSearchedProductInfo} from '../actions/getProductInfo';
+import { getSortedProductInfo, getProductInfoTarget, getSearchedProductInfo } from '../actions/getProductInfo';
 class DashboardBody extends Component {
     constructor(props) {
         super(props);
@@ -11,13 +11,17 @@ class DashboardBody extends Component {
             data: [],
             filterBrand: [],
             filterAudience: '',
-            searchedList:[]
+            searchedList: [],
+            sort: []
         };
     }
     productSortedlist = async () => {
-        await this.props.getSortedProductInfo();
-        const brandSorting = await this.props.product_info;
-        await console.log('sorting', brandSorting);
+        // await this.props.getProductInfo();
+        // const brandSorting = await this.props.product_info;
+        // await console.log('sorting', brandSorting);
+        // await this.props.getProductInfoTarget(this.state.filterAudience, this.state.filterBrand,() => {
+        //     this.setState({data: this.props.sorted_product_info})
+        // });
     }
     productInfolist = async () => {
         await this.props.getProductInfo();
@@ -27,53 +31,63 @@ class DashboardBody extends Component {
             filterAudience: await e.target.value.toLowerCase()
         })
         this.handleFilter();
+        console.log('aud', this.state.filterAudience);
     }
-    handleChangeBrand = async (e)  => {
+
+    handleChangeBrand = async (e) => {
         this.setState({
             filterBrand: await e.target.value.toLowerCase()
         })
         this.handleFilter();
     }
     handleFilter = async () => {
-        await this.props.getProductInfoTarget(this.state.filterAudience,this.state.filterBrand);
+        await this.props.getProductInfoTarget(this.state.filterAudience, this.state.filterBrand, () => this.setState({ data: this.props.product_info }));
     }
     searchBar = async searchedItem => {
-        // await this.props.getSearchedProductInfo(searchedItem);
-        console.log('searchBar',searchedItem);
-        const searching = await this.props.search_result;
-        console.log('searchbar',searching);
-        await this.props.getSearchedProductInfo(searchedItem);
+        console.log('searchBar', searchedItem);
+        await this.props.getSearchedProductInfo(searchedItem, () => {
+            this.setState({ data: this.props.search_result })
+        });
     }
     searchButtonClicked = async () => {
         await this.props.getSearchedProductInfo();
     }
     render() {
-        const product_list = this.props.product_info;
-        const search_list = this.props.search_result;
-        console.log('search_list',search_list);
+        // const product_list = this.props.product_info;
+        // const search_list = this.props.search_result;
         const sort_list_desc = this.props.sorted_product_info;
+        console.log('data', this.state.data)
         return (
             <div>
-                <DashboardHeader    
-                    // targetAudience={(audience) => this.targetaudWiseProductInfo(audience)}
+                <DashboardHeader
                     searchAll={(item) => this.searchBar(item)}
-                    handleChangeAud = {(e) => this.handleChangeAud(e)}
-                    searchButtonClicked = {this.searchButtonClicked()}
+                    handleChangeAud={(e) => this.handleChangeAud(e)}
+                    searchButtonClicked={this.searchButtonClicked()}
                 />
                 <div>
                     <button className='sortButton' onClick={() => this.productSortedlist()}>Sort</button>
+                    {/* <form onSubmit={this.handleSubmit}>
+                        <select className="dropdown"
+                            onChange={this.productSortedlist}
+                            className='sortButton'
+                        >Category
+                            <option value="" selected disabled hidden >Sort By</option>
+                            <option value=''>High To Low</option>
+                            <option value=''>Low to High</option>
+                        </select>
+                    </form> */}
+
                 </div>
                 <div className='row abc'>
                     <div className='col-3'>
-                        <DashboardSidebar 
-                        brandSorting={(brand) => this.brandWiseSorting(brand)}
-                        handleChangeBrand = {(e) => this.handleChangeBrand(e)}
-                        
+                        <DashboardSidebar
+                            brandSorting={(brand) => this.brandWiseSorting(brand)}
+                            handleChangeBrand={(e) => this.handleChangeBrand(e)}
                         />
                     </div>
                     <div className='col-9'>
                         <div className="user-container">
-                            {product_list && product_list.map((product, index) => {
+                            {this.state.data.length > 0 && this.state.data.map((product, index) => {
                                 return (
                                     <div className="user-card" key={index}>
                                         <img
@@ -87,46 +101,6 @@ class DashboardBody extends Component {
                                 );
                             })}
                         </div>
-                        <div>
-                            {this.state.data.length > 0 && this.state.data.map((item, index) => {
-                                console.log('item', item);
-                                return (
-                                    <div>
-                                        <div key={index}>hey{item.title}</div>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                        <div className="user-container">
-                            {sort_list_desc && sort_list_desc.map((product, index) => {
-                                return (
-                                    <div className="user-card" key={index}>
-                                        <img
-                                            className="user-img"
-                                            src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg"
-                                        />
-                                        <p className="user-name">{product.title}</p>
-                                        <p className="user-designation">{product.quantity}</p>
-                                        <p className="user-team">Rs.{product.pricing}</p>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                        <div className="user-container">
-                            { search_list.length > 0 && search_list.map((searchProduct, index) => {
-                                return (
-                                    <div className="user-card" key={index}>
-                                        <img
-                                            className="user-img"
-                                            src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg"
-                                        />
-                                        <p className="user-name">{searchProduct.title}</p>
-                                        <p className="user-designation">{searchProduct.quantity}</p>
-                                        <p className="user-team">Rs.{searchProduct.pricing}</p>
-                                    </div>
-                                );
-                            })}
-                        </div>
                     </div>
                 </div>
             </div>
@@ -134,7 +108,6 @@ class DashboardBody extends Component {
     }
 }
 function mapStateToProps(state) {
-    console.log('searchlis', state.search_result.search_result);
     return {
         product_info: state.product_info.product_info,
         sorted_product_info: state.sorted_product_info.sorted_product_info,

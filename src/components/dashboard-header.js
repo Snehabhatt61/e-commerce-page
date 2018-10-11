@@ -7,15 +7,13 @@ export default class DashboardHeader extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            search: ''
+            search: '',
+            searchItem: ''
         }
     }
-    searchHandler = async (e) => {
-        this.setState({
-            search: await e.target.value
-        })
+    searchHandler = async () => {
         console.log('search', this.state.search);
-        await this.props.searchAll(this.state.search);
+        await this.props.searchAll(this.state.searchItem);
     }
     render() {
         return (
@@ -28,25 +26,25 @@ export default class DashboardHeader extends Component {
                         <input
                             placeholder='Search'
                             className='header-search'
-                            onChange={this.searchHandler}
-                            
+                            onChange={event => this.setState({searchItem: event.target.value})}
                         >
                         </input>
                         <button className='header-search-button'
-                            onClick = {this.searchHandler}
-                            >
+                            onClick={() => this.searchHandler(this.state.searchItem)}
+                        >Search
                         </button>
                         <div className='d-flex push'>
                             <p>Sign Up</p>
                             <p>Sign In</p>
                         </div>
                     </div>
-                    <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={() => this.handleSubmit()}>
                         <select className="dropdown"
-                            onChange={this.props.handleChangeAud}
+                            onChange={(e) => this.props.handleChangeAud(e)}
                             className='header-dropdown'
+                            defaultValue= ""
                         >Category
-                            <option value="" selected disabled hidden >Category</option>
+                            <option value="" disabled hidden >Category</option>
                             <option value='all'>All</option>
                             <option value='Men'>Men</option>
                             <option value='Women'>Women</option>
