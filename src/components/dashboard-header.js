@@ -38,7 +38,7 @@ export default class DashboardHeader extends Component {
                             <p>Sign In</p>
                         </div>
                     </div>
-                    <form onSubmit={() => this.handleSubmit()}>
+                    <form>
                         <select className="dropdown"
                             onChange={(e) => this.props.handleChangeAud(e)}
                             className='header-dropdown'

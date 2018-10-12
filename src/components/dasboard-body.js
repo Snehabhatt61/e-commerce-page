@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DashboardSidebar from './dashboard-sidebar';
 import DashboardHeader from './dashboard-header';
-import { getProductInfo } from '../actions/getProductInfo';
-import { getSortedProductInfo, getProductInfoTarget, getSearchedProductInfo } from '../actions/getProductInfo';
+import { getProductInfo, getSortedProductInfo, getProductInfoTarget, getSearchedProductInfo } from '../actions/getProductInfo';
 class DashboardBody extends Component {
     constructor(props) {
         super(props);
@@ -12,37 +11,35 @@ class DashboardBody extends Component {
             filterBrand: [],
             filterAudience: '',
             searchedList: [],
-            sort: []
+            sortby: '',
+            sortingOrder: ''
         };
     }
-    productSortedlist = async () => {
-        // await this.props.getProductInfo();
-        // const brandSorting = await this.props.product_info;
-        // await console.log('sorting', brandSorting);
-        // await this.props.getProductInfoTarget(this.state.filterAudience, this.state.filterBrand,() => {
-        //     this.setState({data: this.props.sorted_product_info})
-        // });
-    }
-    productInfolist = async () => {
-        await this.props.getProductInfo();
-    }
     handleChangeAud = async (e) => {
-        this.setState({
-            filterAudience: await e.target.value.toLowerCase()
+        await this.setState({
+            filterAudience: e.target.value.toLowerCase()
         })
         this.handleFilter();
     }
-    handleChangeBrand = async (value) => {
-        this.setState({
-            filterBrand: value
+    handleChangeBrand = async (e) => {
+       await this.setState({
+            filterBrand: e.target.value.toLowerCase()
         })
         this.handleFilter();
-        console.log('aud', this.state.filterBrand);
+        console.log('brnd', this.state.filterBrand);
     }
+    
     handleFilter = async () => {
-        console.log('props product_info', this.props.product_info)
-        await this.props.getProductInfoTarget(this.state.filterAudience, this.state.filterBrand, () => this.setState({ data: this.props.product_info }));
-        console.log('filter', this.state.data);
+        let filter = await {
+            branding: this.state.filterBrand,
+            target_audience: this.state.filterAudience
+        }
+        console.log("---before Api call")
+        await this.props.getProductInfo(filter, () => {
+            console.log('hehe',this.props.product_info);
+            this.setState({data: this.props.product_info })
+        });
+        console.log('filteredlist', filter);
     }
     searchBar = async searchedItem => {
         console.log('searchBar', searchedItem);
@@ -51,20 +48,10 @@ class DashboardBody extends Component {
         });
     }
     searchButtonClicked = async () => {
-        await this.props.getSearchedProductInfo();
-    }
-    componentDidUpdate = (previousProps, nextState) => {
-        console.log('prevprops', previousProps, nextState);
-        if (previousProps.product_info.filterBrand !== this.props.product_info.filterBrand) {
-            this.setState({ data: this.props.product_info });
-        }
-        else {
-            return false;
-        }
+        // await this.props.getSearchedProductInfo();
     }
     render() {
-        const sort_list_desc = this.props.sorted_product_info;
-        // console.log('data', this.state.data)
+        // const sort_list_desc = this.props.sorted_product_info;
         return (
             <div>
                 <DashboardHeader
@@ -73,8 +60,8 @@ class DashboardBody extends Component {
                     searchButtonClicked={this.searchButtonClicked()}
                 />
                 <div>
-                    <button className='sortButton' onClick={() => this.productSortedlist()}>Sort</button>
-                    {/* <form onSubmit={this.handleSubmit}>
+                    {/* <button className='sortButton' onClick={() => this.productSortedlist()}>Sort</button> */}
+                    <form>
                         <select className="dropdown"
                             onChange={this.productSortedlist}
                             className='sortButton'
@@ -83,13 +70,12 @@ class DashboardBody extends Component {
                             <option value=''>High To Low</option>
                             <option value=''>Low to High</option>
                         </select>
-                    </form> */}
+                    </form>
 
                 </div>
                 <div className='row abc'>
                     <div className='col-3'>
                         <DashboardSidebar
-                            // brandSorting={(brand) => this.brandWiseSorting(brand)}
                             handleChangeBrand={(e) => this.handleChangeBrand(e)}
                         />
                     </div>
@@ -117,9 +103,9 @@ class DashboardBody extends Component {
 }
 function mapStateToProps(state) {
     return {
-        product_info: state.product_info.product_info,
+        product_info: state.allProduct_detail.allProduct_detail,
         sorted_product_info: state.sorted_product_info.sorted_product_info,
         search_result: state.search_result.search_result
     }
 }
-export default connect(mapStateToProps, { getSearchedProductInfo, getSortedProductInfo, getProductInfoTarget })(DashboardBody);
+export default connect(mapStateToProps, { getProductInfo, getSearchedProductInfo, getProductInfoTarget })(DashboardBody);

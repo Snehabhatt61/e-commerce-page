@@ -2,7 +2,8 @@ import axios from 'axios';
 import {
     GET_PRODUCTINFO,
     SEARCH_INFO,
-    GET_SORTEDDATA
+    GET_SORTEDDATA,
+    GET_DETAILPRODUCTINFO
 } from "./types";
 
 export function getSearchedProductInfo(search, success) {
@@ -27,7 +28,6 @@ export function getProductInfoTarget(audience, brand, success) {
                 params: {
                     target_audience: audience,
                     filter_brand: brand,
-                    // high_to_low: sort 
                 }
             });
             console.log('res', response)
@@ -38,18 +38,18 @@ export function getProductInfoTarget(audience, brand, success) {
         }
     }
 };
-export function getProductInfo(all, filter, sort) {
+export function getProductInfo(filter ,sort, success) {
     return async function (dispatch) {
         try {
-            const response = await axios.get('http://localhost:4000/productInfo', {
+            console.log("------------------")
+            const response = await axios.get('http://localhost:4000/productDetail', {
                 params: {
-                    all_data: all,
-                    filter_data: filter,
-                    sort_data: sort
+                  ...filter,
+                  ...sort
                 }
             });
             console.log('res', response)
-            await dispatch({ type: GET_PRODUCTINFO, payload: response.data });
+            await dispatch({ type: GET_DETAILPRODUCTINFO, payload: response.data });
             success && success();
         } catch (e) {
             console.error(e);

@@ -1,8 +1,9 @@
-import { GET_PRODUCTINFO, SEARCH_INFO } from '../actions/types';
+import { GET_PRODUCTINFO, SEARCH_INFO, GET_DETAILPRODUCTINFO } from '../actions/types';
 
 const INITIAL_STATE = {
     product_info: [],
-    search_result: {}
+    search_result: {},
+    allProduct_detail: {}
 }
 export default function (state = INITIAL_STATE, action) {
     switch (action.type) {
@@ -16,6 +17,11 @@ export default function (state = INITIAL_STATE, action) {
                 ...state,
                 search_result: action.payload
             };
+        case GET_DETAILPRODUCTINFO:
+            return {
+                ...state,
+                allProduct_detail: action.payload
+            }
         default:
             return state;
     }
