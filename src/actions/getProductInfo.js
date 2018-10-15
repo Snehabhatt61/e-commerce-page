@@ -21,31 +21,13 @@ export function getSearchedProductInfo(search, success) {
         }
     }
 };
-export function getProductInfoTarget(audience, brand, success) {
-    return async function (dispatch) {
-        try {
-            const response = await axios.get('http://localhost:4000/productInfo', {
-                params: {
-                    target_audience: audience,
-                    filter_brand: brand,
-                }
-            });
-            console.log('res', response)
-            await dispatch({ type: GET_PRODUCTINFO, payload: response.data });
-            success && success();
-        } catch (e) {
-            console.error(e);
-        }
-    }
-};
-export function getProductInfo(filter ,sort, success) {
+export function getProductInfo(filter , success) {
     return async function (dispatch) {
         try {
             console.log("------------------")
             const response = await axios.get('http://localhost:4000/productDetail', {
                 params: {
-                  ...filter,
-                  ...sort
+                  ...filter,  
                 }
             });
             console.log('res', response)

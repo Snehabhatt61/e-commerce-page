@@ -12,7 +12,9 @@ class DashboardBody extends Component {
             filterAudience: '',
             searchedList: [],
             sortby: '',
-            sortingOrder: ''
+            sortingOrder: true,
+            filteredSortedData: ''
+
         };
     }
     handleChangeAud = async (e) => {
@@ -22,24 +24,45 @@ class DashboardBody extends Component {
         this.handleFilter();
     }
     handleChangeBrand = async (e) => {
-       await this.setState({
+        await this.setState({
             filterBrand: e.target.value.toLowerCase()
         })
         this.handleFilter();
-        console.log('brnd', this.state.filterBrand);
     }
-    
+    handleSort = async (sort) => {
+        this.setState({
+            sortby: sort,
+            sortingOrder: this.state.sortBy === sort ? !this.state.sortingOrder : true,
+        })
+        this.applySortFilter();
+    }
+    applySortFilter = async () => {
+        let sort = await {
+            'o': this.state.sortingOrder ? this.state.sortBy : '-' + this.state.sortBy
+        }
+        await this.props.getProductInfo(this.state.filter, () => {
+            this.setState({ data: this.props.product_info })
+        });
+    }
     handleFilter = async () => {
         let filter = await {
             branding: this.state.filterBrand,
             target_audience: this.state.filterAudience
         }
-        console.log("---before Api call")
         await this.props.getProductInfo(filter, () => {
-            console.log('hehe',this.props.product_info);
-            this.setState({data: this.props.product_info })
+            console.log('hehe', this.props.product_info);
+            this.setState({ data: this.props.product_info, filteredSortedData: this.props.product_info })
         });
         console.log('filteredlist', filter);
+    }
+    sortByKey = async () => {
+        var sorted = this.state.filteredSortedData;
+        var sorted = sorted.sort(function price(a, b) {
+            return b.pricing < a.pricing ? 1
+                : b.pricing > a.pricing ? -1
+                    : 0;
+        });
+        this.setState({ data: sorted })
     }
     searchBar = async searchedItem => {
         console.log('searchBar', searchedItem);
@@ -48,30 +71,34 @@ class DashboardBody extends Component {
         });
     }
     searchButtonClicked = async () => {
-        // await this.props.getSearchedProductInfo();
+        await this.props.getSearchedProductInfo();
     }
     render() {
-        // const sort_list_desc = this.props.sorted_product_info;
         return (
             <div>
                 <DashboardHeader
                     searchAll={(item) => this.searchBar(item)}
                     handleChangeAud={(e) => this.handleChangeAud(e)}
-                    searchButtonClicked={this.searchButtonClicked()}
+                    searchButtonClicked={this.searchButtonClicked}
                 />
                 <div>
-                    {/* <button className='sortButton' onClick={() => this.productSortedlist()}>Sort</button> */}
-                    <form>
+                    <button className='sortButton' onClick={() => this.sortByKey()}>Sort</button>
+                    {/* <form>
                         <select className="dropdown"
-                            onChange={this.productSortedlist}
+                            onChange={() => this.applySortFilter()}
                             className='sortButton'
                         >Category
-                            <option value="" selected disabled hidden >Sort By</option>
-                            <option value=''>High To Low</option>
-                            <option value=''>Low to High</option>
+                            <option value="" disabled hidden >Sort By</option>
+                            <option
+                                value=''
+                                onClick={() => this.handleSort('highlow')}
+                            >High To Low</option>
+                            <option
+                                value=''
+                                onClick={() => this.handleSort('lowHigh')}
+                            >Low to High</option>
                         </select>
-                    </form>
-
+                    </form> */}
                 </div>
                 <div className='row abc'>
                     <div className='col-3'>
@@ -108,4 +135,4 @@ function mapStateToProps(state) {
         search_result: state.search_result.search_result
     }
 }
-export default connect(mapStateToProps, { getProductInfo, getSearchedProductInfo, getProductInfoTarget })(DashboardBody);
+export default connect(mapStateToProps, { getProductInfo, getSearchedProductInfo, getProductInfoTarget, getSortedProductInfo })(DashboardBody);
